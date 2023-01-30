@@ -1,0 +1,35 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "RigidBody3D",
+"class": &"Body",
+"language": &"GDScript",
+"path": "res://scenes/body/body.gd"
+}]
+_global_script_class_icons={
+"Body": ""
+}
+
+[application]
+
+config/name="solar_system_model"
+run/main_scene="res://scenes/system/system.tscn"
+config/features=PackedStringArray("4.0", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Orbital="*res://autoloads/orbital.gd"
+
+[physics]
+
+3d/default_linear_damp=0.0
+3d/default_angular_damp=0.0
