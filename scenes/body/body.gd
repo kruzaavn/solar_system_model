@@ -10,7 +10,7 @@ class_name Body
 func _ready() -> void:
 
 
-	var material = $MeshInstance3D.mesh.get_material()
+	var material = $SurfaceMesh.mesh.get_material()
 
 	material.set_shader_parameter('height_map', height_map)
 	material.set_shader_parameter('mesh_texture', texture)
@@ -32,3 +32,17 @@ func get_gravitational_force():
 	var r = influencing_body.transform.origin - transform.origin
 
 	return ((Orbital.g * influencing_body.mass * mass) / r.length() ** 2) * r.normalized()
+
+
+func _on_mouse_entered():
+	
+	var material = $OutlineMesh.mesh.get_material()
+
+	material.set_shader_parameter('show', true)
+
+
+func _on_mouse_exited():
+	
+	var material = $OutlineMesh.mesh.get_material()
+
+	material.set_shader_parameter('show', false)

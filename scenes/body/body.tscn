@@ -1,46 +1,48 @@
-[gd_scene load_steps=12 format=3 uid="uid://0muswldcin2y"]
+[gd_scene load_steps=9 format=3 uid="uid://0muswldcin2y"]
 
 [ext_resource type="Script" path="res://scenes/body/body.gd" id="1_h0e1s"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="1_nvprb"]
-
-[sub_resource type="Gradient" id="Gradient_sml7a"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_h5be6"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_70d41"]
-seamless = true
-color_ramp = SubResource("Gradient_sml7a")
-noise = SubResource("FastNoiseLite_h5be6")
-
-[sub_resource type="Gradient" id="Gradient_ymaoc"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ndfah"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vbiey"]
-seamless = true
-color_ramp = SubResource("Gradient_ymaoc")
-noise = SubResource("FastNoiseLite_ndfah")
+[ext_resource type="Shader" path="res://scenes/body/outline.gdshader" id="3_jxveo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mfpmq"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_nvprb")
 shader_parameter/sample_scale = 0.1
-shader_parameter/height_map = SubResource("NoiseTexture2D_70d41")
-shader_parameter/mesh_texture = SubResource("NoiseTexture2D_vbiey")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ovucj"]
 resource_local_to_scene = true
 material = SubResource("ShaderMaterial_mfpmq")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_edn7n"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("3_jxveo")
+shader_parameter/show = false
+shader_parameter/color = Color(0, 0.827451, 0.956863, 0.490196)
+
+[sub_resource type="SphereMesh" id="SphereMesh_yvosl"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_edn7n")
+radius = 0.7
+height = 1.4
+
 [sub_resource type="SphereShape3D" id="SphereShape3D_57gkv"]
+radius = 0.7
 
 [node name="body" type="RigidBody3D"]
 gravity_scale = 0.0
 script = ExtResource("1_h0e1s")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="SurfaceMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_ovucj")
+
+[node name="OutlineMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_yvosl")
+skeleton = NodePath("../SurfaceMesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_57gkv")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

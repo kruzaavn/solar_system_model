@@ -1,12 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://gmfmleiwin8c"]
+[gd_scene load_steps=7 format=3 uid="uid://gmfmleiwin8c"]
 
 [ext_resource type="PackedScene" uid="uid://0muswldcin2y" path="res://scenes/body/body.tscn" id="1_ktgkc"]
 [ext_resource type="PackedScene" uid="uid://b2qyogf1ricc7" path="res://scenes/camera/camera_body.tscn" id="2_1c2io"]
+[ext_resource type="PackedScene" uid="uid://draoeu0q3cm8q" path="res://scenes/ui/user_interface.tscn" id="3_edxjg"]
+
+[sub_resource type="Gradient" id="Gradient_enfy4"]
+offsets = PackedFloat32Array(0, 0.434783, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.67451, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jogyy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k54jv"]
+seamless = true
+color_ramp = SubResource("Gradient_enfy4")
+noise = SubResource("FastNoiseLite_jogyy")
 
 [node name="system" type="Node3D"]
 
 [node name="star" parent="." instance=ExtResource("1_ktgkc")]
 mass = 1.6e+11
+texture = SubResource("NoiseTexture2D_k54jv")
 
 [node name="planet" parent="." node_paths=PackedStringArray("influencing_body") instance=ExtResource("1_ktgkc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
@@ -15,3 +28,6 @@ influencing_body = NodePath("../star")
 
 [node name="CameraBody" parent="." instance=ExtResource("2_1c2io")]
 transform = Transform3D(1, -6.97574e-16, -1.5246e-23, -1.5246e-23, -4.37114e-08, 1, -6.97574e-16, -1, -4.37114e-08, 2.08165e-12, 17, 2.08165e-12)
+
+[node name="UserInterface" parent="." node_paths=PackedStringArray("body") instance=ExtResource("3_edxjg")]
+body = NodePath("../CameraBody")
