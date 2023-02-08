@@ -3,6 +3,7 @@ shader_type spatial;
 uniform sampler2D height_map;
 uniform sampler2D mesh_texture;
 uniform float sample_scale;
+uniform bool emmit;
 
 void fragment() {
 	
@@ -10,7 +11,11 @@ void fragment() {
 	
 	ALBEDO = color_sample.rgb;
 	
-	// Place fragment code here.
+	if (emmit) {
+		
+	EMISSION = color_sample.rgb;
+	
+	};
 }
 
 void vertex() {

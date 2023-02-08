@@ -3,21 +3,7 @@ extends RigidBody3D
 class_name Body
 
 @export var influencing_body: RigidBody3D
-@export var height_map: Texture2D
-@export var texture: Texture2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-
-
-	var material = $SurfaceMesh.mesh.get_material()
-
-	material.set_shader_parameter('height_map', height_map)
-	material.set_shader_parameter('mesh_texture', texture)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:
 

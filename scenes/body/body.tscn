@@ -9,6 +9,7 @@ resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_nvprb")
 shader_parameter/sample_scale = 0.1
+shader_parameter/emmit = null
 
 [sub_resource type="SphereMesh" id="SphereMesh_ovucj"]
 resource_local_to_scene = true
