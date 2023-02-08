@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://gmfmleiwin8c"]
+[gd_scene load_steps=14 format=3 uid="uid://gmfmleiwin8c"]
 
 [ext_resource type="PackedScene" uid="uid://b18jfkakn3jx0" path="res://scenes/body/star.tscn" id="1_3hnrb"]
 [ext_resource type="PackedScene" uid="uid://b2qyogf1ricc7" path="res://scenes/camera/camera_body.tscn" id="2_1c2io"]
@@ -17,6 +17,24 @@ seamless = true
 color_ramp = SubResource("Gradient_oygqj")
 noise = SubResource("FastNoiseLite_x8w8m")
 
+[sub_resource type="Gradient" id="Gradient_q7w1w"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kdnnp"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f14c0"]
+seamless = true
+color_ramp = SubResource("Gradient_q7w1w")
+noise = SubResource("FastNoiseLite_kdnnp")
+
+[sub_resource type="Gradient" id="Gradient_kjdu8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n8m0t"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wuv4j"]
+seamless = true
+color_ramp = SubResource("Gradient_kjdu8")
+noise = SubResource("FastNoiseLite_n8m0t")
+
 [node name="system" type="Node3D"]
 
 [node name="bodies" type="Node3D" parent="."]
@@ -28,6 +46,8 @@ texture = SubResource("NoiseTexture2D_ltmbx")
 [node name="Planet" parent="bodies" node_paths=PackedStringArray("influencing_body") instance=ExtResource("2_7sjec")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2.08165e-12, 2.08165e-12)
 linear_velocity = Vector3(2.08165e-12, 2.08165e-12, -1.88)
+height_map = SubResource("NoiseTexture2D_f14c0")
+texture = SubResource("NoiseTexture2D_wuv4j")
 influencing_body = NodePath("../star")
 
 [node name="UserInterface" parent="." node_paths=PackedStringArray("body") instance=ExtResource("3_edxjg")]
