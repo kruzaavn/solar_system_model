@@ -1,49 +1,72 @@
-[gd_scene load_steps=9 format=3 uid="uid://0muswldcin2y"]
+[gd_scene load_steps=15 format=3 uid="uid://0muswldcin2y"]
 
 [ext_resource type="Script" path="res://scenes/body/body.gd" id="1_h0e1s"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="1_nvprb"]
+[ext_resource type="Script" path="res://resources/BodyData.gd" id="2_q5xe8"]
 [ext_resource type="Shader" path="res://scenes/body/outline.gdshader" id="3_jxveo"]
+[ext_resource type="Texture2D" uid="uid://suwchw33ficm" path="res://scenes/body/outline_curve_texture.tres" id="4_hmj63"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfpmq"]
+[sub_resource type="Gradient" id="Gradient_rpb3a"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tmmf2"]
+noise_type = 3
+frequency = 0.001
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_435c6"]
+seamless = true
+color_ramp = SubResource("Gradient_rpb3a")
+noise = SubResource("FastNoiseLite_tmmf2")
+
+[sub_resource type="Resource" id="Resource_7bqi0"]
+script = ExtResource("2_q5xe8")
+noise = SubResource("NoiseTexture2D_435c6")
+surface_graident = PackedColorArray(0, 0.823529, 0, 1, 0.882353, 0.780392, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uywuu"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_nvprb")
 shader_parameter/sample_scale = 0.1
 shader_parameter/emmit = null
+shader_parameter/height_map = SubResource("NoiseTexture2D_435c6")
+shader_parameter/mesh_texture = SubResource("NoiseTexture2D_435c6")
 
-[sub_resource type="SphereMesh" id="SphereMesh_ovucj"]
+[sub_resource type="SphereMesh" id="SphereMesh_5unp5"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_mfpmq")
+material = SubResource("ShaderMaterial_uywuu")
+radial_segments = 512
+rings = 512
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_edn7n"]
-resource_local_to_scene = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jj1ik"]
 render_priority = 0
 shader = ExtResource("3_jxveo")
-shader_parameter/show = false
-shader_parameter/color = Color(0, 0.827451, 0.956863, 0.490196)
+shader_parameter/show = true
+shader_parameter/color = Color(0.635294, 0.717647, 1, 1)
+shader_parameter/alpha = ExtResource("4_hmj63")
 
-[sub_resource type="SphereMesh" id="SphereMesh_yvosl"]
-resource_local_to_scene = true
-material = SubResource("ShaderMaterial_edn7n")
+[sub_resource type="SphereMesh" id="SphereMesh_amu6v"]
+material = SubResource("ShaderMaterial_jj1ik")
 radius = 0.7
 height = 1.4
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_57gkv"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_mh63o"]
 radius = 0.7
 
 [node name="body" type="RigidBody3D"]
 gravity_scale = 0.0
 script = ExtResource("1_h0e1s")
+data = SubResource("Resource_7bqi0")
 
 [node name="SurfaceMesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_ovucj")
+mesh = SubResource("SphereMesh_5unp5")
 
 [node name="OutlineMesh" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_yvosl")
+mesh = SubResource("SphereMesh_amu6v")
 skeleton = NodePath("../SurfaceMesh")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_57gkv")
+shape = SubResource("SphereShape3D_mh63o")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

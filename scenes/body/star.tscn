@@ -1,27 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://b18jfkakn3jx0"]
+[gd_scene load_steps=15 format=3 uid="uid://b18jfkakn3jx0"]
 
 [ext_resource type="PackedScene" uid="uid://0muswldcin2y" path="res://scenes/body/body.tscn" id="1_kal63"]
 [ext_resource type="Script" path="res://scenes/body/star.gd" id="2_vwb5q"]
+[ext_resource type="Script" path="res://resources/BodyData.gd" id="3_ihnsl"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="3_v5ovu"]
 [ext_resource type="Shader" path="res://scenes/body/outline.gdshader" id="4_w3y3x"]
+[ext_resource type="Texture2D" uid="uid://suwchw33ficm" path="res://scenes/body/outline_curve_texture.tres" id="5_7uv3o"]
+
+[sub_resource type="Gradient" id="Gradient_50hqe"]
+offsets = PackedFloat32Array(0, 0.722449, 0.997959)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 0, 1, 0.841489, 0.192698, 0.421811, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w0h33"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bjm54"]
+color_ramp = SubResource("Gradient_50hqe")
+noise = SubResource("FastNoiseLite_w0h33")
+
+[sub_resource type="Resource" id="Resource_agcir"]
+script = ExtResource("3_ihnsl")
+noise = SubResource("NoiseTexture2D_bjm54")
+surface_graident = PackedColorArray()
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qb7i1"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("3_v5ovu")
 shader_parameter/sample_scale = 0.1
-shader_parameter/emmit = null
+shader_parameter/emmit = true
+shader_parameter/mesh_texture = SubResource("NoiseTexture2D_bjm54")
 
 [sub_resource type="SphereMesh" id="SphereMesh_m7cd8"]
 resource_local_to_scene = true
 material = SubResource("ShaderMaterial_qb7i1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_87odv"]
-resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("4_w3y3x")
 shader_parameter/show = false
 shader_parameter/color = Color(0, 0.827451, 0.956863, 0.490196)
+shader_parameter/alpha = ExtResource("5_7uv3o")
 
 [sub_resource type="SphereMesh" id="SphereMesh_7x2y7"]
 resource_local_to_scene = true
@@ -31,7 +49,7 @@ height = 1.4
 
 [node name="Star" instance=ExtResource("1_kal63")]
 script = ExtResource("2_vwb5q")
-texture = null
+data = SubResource("Resource_agcir")
 
 [node name="SurfaceMesh" parent="." index="0"]
 mesh = SubResource("SphereMesh_m7cd8")
@@ -40,3 +58,5 @@ mesh = SubResource("SphereMesh_m7cd8")
 mesh = SubResource("SphereMesh_7x2y7")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="." index="3"]
+omni_range = 100.0
+omni_attenuation = 0.499997

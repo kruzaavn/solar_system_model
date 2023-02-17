@@ -1,12 +1,12 @@
+@tool
 extends Body
 
 class_name Star
 
-@export var texture: Texture2D
 
-func _ready():
+func build():
 	
 	var material = $SurfaceMesh.mesh.get_material()
 
 	material.set_shader_parameter('emmit', true)
-	material.set_shader_parameter('mesh_texture', texture)
+	material.set_shader_parameter('mesh_texture', data.noise)
