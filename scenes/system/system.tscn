@@ -7,8 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://0muswldcin2y" path="res://scenes/body/body.tscn" id="3_uicn7"]
 
 [sub_resource type="Gradient" id="Gradient_th5x7"]
+colors = PackedColorArray(0, 0, 0, 1, 0.626167, 0.493241, 0.0322742, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_yvp6d"]
+noise_type = 3
+frequency = 0.05
+domain_warp_enabled = true
+domain_warp_type = 1
+metadata/_preview_in_3d_space_ = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qaphc"]
 seamless = true

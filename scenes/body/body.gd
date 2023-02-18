@@ -7,9 +7,12 @@ class_name Body
 
 @export var data: Resource: 
 	set(value):
+		
 		data = value
 		
-		data.changed.connect(build)
+		if data is BodyData and not data.changed.is_connected(build):
+		
+			data.changed.connect(build)
 		
 func _ready():
 	
@@ -48,8 +51,6 @@ func _on_mouse_exited():
 	
 	
 func build():
-	
-	print('build called')
 	
 	var material = $SurfaceMesh.mesh.get_material()
 	

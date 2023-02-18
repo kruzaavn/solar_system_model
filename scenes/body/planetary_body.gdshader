@@ -5,6 +5,18 @@ uniform sampler2D mesh_texture;
 uniform float sample_scale;
 uniform bool emmit;
 
+varying vec3 world;
+
+
+void vertex() {
+	
+	vec4 height_sample = texture(height_map, UV);
+	
+	VERTEX += NORMAL * height_sample.x * sample_scale;
+	
+}
+
+
 void fragment() {
 	
 	vec4 color_sample = texture(mesh_texture, UV);
@@ -18,10 +30,3 @@ void fragment() {
 	};
 }
 
-void vertex() {
-	
-	vec4 height_sample = texture(height_map, UV);
-	
-	VERTEX += NORMAL * height_sample.x * sample_scale;
-	
-}
