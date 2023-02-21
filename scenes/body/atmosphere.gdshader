@@ -20,7 +20,7 @@ vec4 apply_fresnel_layer(vec3 normal, vec3 view, vec4 base_color_layer, vec4 fre
 
 vec4 apply_cloud_layer(vec4 base_color, vec2 uv, float time) {
 	
-	vec2 sample_location = vec2(uv.x + time * 1.0/wind_speed, uv.y );
+	vec2 sample_location = vec2(uv.x + (time * 1.0/wind_speed), uv.y );
 	
 	float cloud = texture(cloud_texture, sample_location).r;
 	
@@ -42,5 +42,6 @@ void fragment() {
 	ALBEDO = albedo.rgb;
 		
 	ALPHA = albedo.a;
-
+	METALLIC = 0.0;
+	ROUGHNESS = 1.0;
 }

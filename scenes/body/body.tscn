@@ -1,15 +1,15 @@
-[gd_scene load_steps=29 format=3 uid="uid://0muswldcin2y"]
+[gd_scene load_steps=33 format=3 uid="uid://0muswldcin2y"]
 
 [ext_resource type="Script" path="res://scenes/body/body.gd" id="1_h0e1s"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="1_nvprb"]
 [ext_resource type="Script" path="res://resources/BodyData.gd" id="2_q5xe8"]
+[ext_resource type="Gradient" uid="uid://bhr568w65wtv7" path="res://textures/g.tres" id="3_arqjw"]
 [ext_resource type="Shader" path="res://scenes/body/outline.gdshader" id="3_jxveo"]
 [ext_resource type="Texture2D" uid="uid://suwchw33ficm" path="res://scenes/body/outline_curve_texture.tres" id="4_hmj63"]
 [ext_resource type="Shader" path="res://scenes/body/water.gdshader" id="5_y71it"]
 [ext_resource type="Shader" path="res://scenes/body/atmosphere.gdshader" id="7_y7ht5"]
 
 [sub_resource type="Gradient" id="Gradient_4o6it"]
-colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1tiss"]
 noise_type = 3
@@ -20,10 +20,13 @@ seamless = true
 color_ramp = SubResource("Gradient_4o6it")
 noise = SubResource("FastNoiseLite_1tiss")
 
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f2hcc"]
+gradient = ExtResource("3_arqjw")
+
 [sub_resource type="Resource" id="Resource_7bqi0"]
 script = ExtResource("2_q5xe8")
 noise = SubResource("NoiseTexture2D_435c6")
-surface_graident = PackedColorArray()
+surface_graident = SubResource("GradientTexture1D_f2hcc")
 biome = 0
 radius_ratio = 0.01
 
@@ -67,14 +70,22 @@ material = SubResource("ShaderMaterial_827ri")
 radius = 0.55
 height = 1.1
 
+[sub_resource type="Gradient" id="Gradient_hdk2r"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.444444, 0.522222, 0.817778, 0.877778)
+colors = PackedColorArray(1, 1, 1, 1, 0.865995, 0.755384, 0.562674, 1, 0, 0.466667, 0, 1, 0.529067, 0.529067, 0.529067, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_bx47h"]
+gradient = SubResource("Gradient_hdk2r")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uywuu"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_nvprb")
 shader_parameter/sample_scale = 0.1
-shader_parameter/emmit = null
+shader_parameter/emmit = false
 shader_parameter/height_map = SubResource("NoiseTexture2D_435c6")
-shader_parameter/mesh_texture = SubResource("NoiseTexture2D_435c6")
+shader_parameter/surface_gradient = SubResource("GradientTexture1D_bx47h")
 
 [sub_resource type="SphereMesh" id="SphereMesh_5unp5"]
 resource_local_to_scene = true

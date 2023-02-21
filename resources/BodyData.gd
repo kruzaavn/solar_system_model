@@ -5,7 +5,7 @@ class_name BodyData
 
 @export var noise: NoiseTexture2D
 
-@export var surface_graident: PackedColorArray
+@export var surface_graident: GradientTexture1D
 
 @export_enum("ROCKY", "ATMOSPHERE", "OCEANIC", "GAS_GIANT") var biome: int
 

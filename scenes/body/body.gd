@@ -55,4 +55,6 @@ func build():
 	var material = $SurfaceMesh.mesh.get_material()
 	
 	material.set_shader_parameter('height_map', data.noise)
-	material.set_shader_parameter('mesh_texture', data.noise)
+	print(data.surface_gradient)
+	material.set_shader_parameter('surface_gradient', data.surface_gradient)
+
