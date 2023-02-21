@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://0muswldcin2y"]
+[gd_scene load_steps=29 format=3 uid="uid://0muswldcin2y"]
 
 [ext_resource type="Script" path="res://scenes/body/body.gd" id="1_h0e1s"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="1_nvprb"]
@@ -95,6 +95,15 @@ uv2_padding = 0.0
 radius = 0.7
 height = 1.4
 
+[sub_resource type="Gradient" id="Gradient_gpa4w"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a724w"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jk6av"]
+seamless = true
+color_ramp = SubResource("Gradient_gpa4w")
+noise = SubResource("FastNoiseLite_a724w")
+
 [sub_resource type="Curve" id="Curve_kfkuj"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.640929, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -105,9 +114,12 @@ curve = SubResource("Curve_kfkuj")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_100fi"]
 render_priority = 1
 shader = ExtResource("7_y7ht5")
-shader_parameter/color = Color(0.262745, 0.423529, 0.901961, 1)
-shader_parameter/fresnel_color = Color(1, 0.466667, 0, 1)
+shader_parameter/color = Color(0.262745, 0.423529, 0.901961, 0.0392157)
+shader_parameter/fresnel_color = Color(1, 0.466667, 0, 0.329412)
+shader_parameter/cloud_cut = 0.63
+shader_parameter/wind_speed = 19.7
 shader_parameter/fresnel_curve = SubResource("CurveTexture_v6gcp")
+shader_parameter/cloud_texture = SubResource("NoiseTexture2D_jk6av")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ym2yv"]
 material = SubResource("ShaderMaterial_100fi")
