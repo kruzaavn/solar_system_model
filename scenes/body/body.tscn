@@ -95,18 +95,19 @@ uv2_padding = 0.0
 radius = 0.7
 height = 1.4
 
-[sub_resource type="Curve" id="Curve_ailm8"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.290564, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_kfkuj"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.640929, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_o33da"]
-curve = SubResource("Curve_ailm8")
+[sub_resource type="CurveTexture" id="CurveTexture_v6gcp"]
+curve = SubResource("Curve_kfkuj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_100fi"]
 render_priority = 1
 shader = ExtResource("7_y7ht5")
-shader_parameter/color = Color(0.972549, 1, 0, 1)
-shader_parameter/alpha = SubResource("CurveTexture_o33da")
+shader_parameter/color = Color(0.262745, 0.423529, 0.901961, 1)
+shader_parameter/fresnel_color = Color(1, 0.466667, 0, 1)
+shader_parameter/fresnel_curve = SubResource("CurveTexture_v6gcp")
 
 [sub_resource type="SphereMesh" id="SphereMesh_ym2yv"]
 material = SubResource("ShaderMaterial_100fi")
