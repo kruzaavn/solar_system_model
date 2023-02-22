@@ -1,34 +1,40 @@
-[gd_scene load_steps=33 format=3 uid="uid://0muswldcin2y"]
+[gd_scene load_steps=34 format=3 uid="uid://0muswldcin2y"]
 
 [ext_resource type="Script" path="res://scenes/body/body.gd" id="1_h0e1s"]
 [ext_resource type="Shader" path="res://scenes/body/planetary_body.gdshader" id="1_nvprb"]
 [ext_resource type="Script" path="res://resources/BodyData.gd" id="2_q5xe8"]
-[ext_resource type="Gradient" uid="uid://bhr568w65wtv7" path="res://textures/g.tres" id="3_arqjw"]
 [ext_resource type="Shader" path="res://scenes/body/outline.gdshader" id="3_jxveo"]
 [ext_resource type="Texture2D" uid="uid://suwchw33ficm" path="res://scenes/body/outline_curve_texture.tres" id="4_hmj63"]
 [ext_resource type="Shader" path="res://scenes/body/water.gdshader" id="5_y71it"]
 [ext_resource type="Shader" path="res://scenes/body/atmosphere.gdshader" id="7_y7ht5"]
 
-[sub_resource type="Gradient" id="Gradient_4o6it"]
+[sub_resource type="Gradient" id="Gradient_7rt7e"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.5, 0.573469, 0.783673)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 0.0784314, 1, 1, 1, 0.466667, 0, 0, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_1tiss"]
-noise_type = 3
-fractal_type = 2
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_f8fa6"]
+gradient = SubResource("Gradient_7rt7e")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_435c6"]
+[sub_resource type="Gradient" id="Gradient_mjlqk"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_d8aso"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uye65"]
 seamless = true
-color_ramp = SubResource("Gradient_4o6it")
-noise = SubResource("FastNoiseLite_1tiss")
+color_ramp = SubResource("Gradient_mjlqk")
+noise = SubResource("FastNoiseLite_d8aso")
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_f2hcc"]
-gradient = ExtResource("3_arqjw")
-
-[sub_resource type="Resource" id="Resource_7bqi0"]
+[sub_resource type="Resource" id="Resource_rdt45"]
 script = ExtResource("2_q5xe8")
-noise = SubResource("NoiseTexture2D_435c6")
-surface_graident = SubResource("GradientTexture1D_f2hcc")
+noise = SubResource("NoiseTexture2D_uye65")
+gradient = SubResource("GradientTexture1D_f8fa6")
 biome = 0
-radius_ratio = 0.01
+scale = 1.0
+ocean = Color(0, 0.380392, 0.960784, 1)
+ocean_fresnel = Color(0.996078, 0, 0.976471, 1)
+atmosphere = Color(0.984314, 0, 0, 0.0941176)
+atmosphere_fresnel = Color(0.627451, 0, 0.972549, 0.34902)
 
 [sub_resource type="Gradient" id="Gradient_ob1xt"]
 
@@ -46,8 +52,8 @@ noise = SubResource("FastNoiseLite_r3dpx")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_827ri"]
 render_priority = 0
 shader = ExtResource("5_y71it")
-shader_parameter/albedo = Color(0, 0, 1, 1)
-shader_parameter/albedo2 = Color(0, 1, 0, 1)
+shader_parameter/albedo = Color(0, 0.380392, 0.960784, 1)
+shader_parameter/albedo2 = Color(0.996078, 0, 0.976471, 1)
 shader_parameter/metallic = 0.0
 shader_parameter/roughness = 0.5
 shader_parameter/wave_direction = Vector2(2.08165e-12, 2.08165e-12)
@@ -70,13 +76,15 @@ material = SubResource("ShaderMaterial_827ri")
 radius = 0.55
 height = 1.1
 
-[sub_resource type="Gradient" id="Gradient_hdk2r"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.444444, 0.522222, 0.817778, 0.877778)
-colors = PackedColorArray(1, 1, 1, 1, 0.865995, 0.755384, 0.562674, 1, 0, 0.466667, 0, 1, 0.529067, 0.529067, 0.529067, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_b5cgr"]
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_bx47h"]
-gradient = SubResource("Gradient_hdk2r")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ncphl"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x3bdg"]
+seamless = true
+as_normal_map = true
+color_ramp = SubResource("Gradient_b5cgr")
+noise = SubResource("FastNoiseLite_ncphl")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uywuu"]
 resource_local_to_scene = true
@@ -84,8 +92,9 @@ render_priority = 0
 shader = ExtResource("1_nvprb")
 shader_parameter/sample_scale = 0.1
 shader_parameter/emmit = false
-shader_parameter/height_map = SubResource("NoiseTexture2D_435c6")
-shader_parameter/surface_gradient = SubResource("GradientTexture1D_bx47h")
+shader_parameter/height_map = SubResource("NoiseTexture2D_uye65")
+shader_parameter/surface_gradient = SubResource("GradientTexture1D_f8fa6")
+shader_parameter/normal_map = SubResource("NoiseTexture2D_x3bdg")
 
 [sub_resource type="SphereMesh" id="SphereMesh_5unp5"]
 resource_local_to_scene = true
@@ -125,8 +134,8 @@ curve = SubResource("Curve_kfkuj")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_100fi"]
 render_priority = 1
 shader = ExtResource("7_y7ht5")
-shader_parameter/color = Color(0.262745, 0.423529, 0.901961, 0.0392157)
-shader_parameter/fresnel_color = Color(1, 0.466667, 0, 0.329412)
+shader_parameter/color = Color(0.984314, 0, 0, 0.0941176)
+shader_parameter/fresnel_color = Color(0.627451, 0, 0.972549, 0.34902)
 shader_parameter/cloud_cut = 0.63
 shader_parameter/wind_speed = 19.7
 shader_parameter/fresnel_curve = SubResource("CurveTexture_v6gcp")
@@ -143,7 +152,7 @@ radius = 0.7
 [node name="body" type="RigidBody3D"]
 gravity_scale = 0.0
 script = ExtResource("1_h0e1s")
-data = SubResource("Resource_7bqi0")
+data = SubResource("Resource_rdt45")
 
 [node name="OceanMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)

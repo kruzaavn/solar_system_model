@@ -55,6 +55,14 @@ func build():
 	var material = $SurfaceMesh.mesh.get_material()
 	
 	material.set_shader_parameter('height_map', data.noise)
-	print(data.surface_gradient)
-	material.set_shader_parameter('surface_gradient', data.surface_gradient)
+	material.set_shader_parameter('surface_gradient', data.gradient)
 
+	material = $OceanMesh.mesh.get_material()
+	
+	material.set_shader_parameter('albedo', data.ocean)
+	material.set_shader_parameter('albedo2', data.ocean_fresnel)
+	
+	material = $AtmosphereMesh.mesh.get_material()
+	
+	material.set_shader_parameter('color', data.atmosphere)
+	material.set_shader_parameter('fresnel_color', data.atmosphere_fresnel)

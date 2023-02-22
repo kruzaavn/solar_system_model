@@ -2,6 +2,7 @@ shader_type spatial;
 
 uniform sampler2D height_map;
 uniform sampler2D surface_gradient;
+uniform sampler2D normal_map;
 uniform float sample_scale;
 uniform bool emmit;
 
@@ -28,5 +29,7 @@ void fragment() {
 	EMISSION = color_sample.rgb;
 	
 	};
+	
+	NORMAL_MAP = texture(normal_map, UV).rgb;
 }
 
