@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://gmfmleiwin8c"]
+[gd_scene load_steps=18 format=3 uid="uid://gmfmleiwin8c"]
 
 [ext_resource type="PackedScene" uid="uid://b18jfkakn3jx0" path="res://scenes/body/star.tscn" id="1_3hnrb"]
 [ext_resource type="PackedScene" uid="uid://b2qyogf1ricc7" path="res://scenes/camera/camera_body.tscn" id="2_1c2io"]
@@ -6,53 +6,74 @@
 [ext_resource type="PackedScene" uid="uid://draoeu0q3cm8q" path="res://scenes/ui/user_interface.tscn" id="3_edxjg"]
 [ext_resource type="PackedScene" uid="uid://0muswldcin2y" path="res://scenes/body/body.tscn" id="3_uicn7"]
 
-[sub_resource type="Gradient" id="Gradient_th5x7"]
-colors = PackedColorArray(0, 0, 0, 1, 0.626167, 0.493241, 0.0322742, 1)
+[sub_resource type="Gradient" id="Gradient_3dun1"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_yvp6d"]
-noise_type = 3
-frequency = 0.05
-domain_warp_enabled = true
-domain_warp_type = 1
-metadata/_preview_in_3d_space_ = true
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b74v0"]
+gradient = SubResource("Gradient_3dun1")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qaphc"]
-seamless = true
-color_ramp = SubResource("Gradient_th5x7")
-noise = SubResource("FastNoiseLite_yvp6d")
+[sub_resource type="Gradient" id="Gradient_icqpx"]
 
-[sub_resource type="Resource" id="Resource_oo4gj"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jytvy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_slgx5"]
+color_ramp = SubResource("Gradient_icqpx")
+noise = SubResource("FastNoiseLite_jytvy")
+
+[sub_resource type="Resource" id="Resource_nelyn"]
+resource_local_to_scene = true
 script = ExtResource("2_qiibh")
-noise = SubResource("NoiseTexture2D_qaphc")
-surface_graident = PackedColorArray()
+noise = SubResource("NoiseTexture2D_slgx5")
+gradient = SubResource("GradientTexture1D_b74v0")
+biome = 0
+scale = 1.0
+ocean = Color(0, 0.419608, 0.439216, 1)
+ocean_fresnel = Color(0.721569, 0, 0.372549, 1)
+atmosphere = Color(0.807843, 0, 0, 0.74902)
+atmosphere_fresnel = Color(0, 0, 1, 0.764706)
 
-[sub_resource type="Gradient" id="Gradient_si6tp"]
+[sub_resource type="Gradient" id="Gradient_aid8y"]
+offsets = PackedFloat32Array(0, 0.531568, 0.922607, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.435294, 0.956863, 0.227451, 1, 0.956863, 0.501961, 0.501961, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_dypyd"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oc8by"]
+gradient = SubResource("Gradient_aid8y")
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7ubwn"]
-seamless = true
-color_ramp = SubResource("Gradient_si6tp")
-noise = SubResource("FastNoiseLite_dypyd")
+[sub_resource type="Gradient" id="Gradient_5bkqm"]
 
-[sub_resource type="Resource" id="Resource_8ghp4"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mupoc"]
+seed = 5
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5itfs"]
+color_ramp = SubResource("Gradient_5bkqm")
+noise = SubResource("FastNoiseLite_mupoc")
+
+[sub_resource type="Resource" id="Resource_w4d2i"]
+resource_local_to_scene = true
 script = ExtResource("2_qiibh")
-noise = SubResource("NoiseTexture2D_7ubwn")
-surface_graident = PackedColorArray()
+noise = SubResource("NoiseTexture2D_5itfs")
+gradient = SubResource("GradientTexture1D_oc8by")
+biome = 0
+scale = 1.0
+ocean = Color(0, 0, 0.654902, 1)
+ocean_fresnel = Color(0, 1, 1, 0.721569)
+atmosphere = Color(0, 0.678431, 0, 0.262745)
+atmosphere_fresnel = Color(0, 0, 1, 0.372549)
 
 [node name="system" type="Node3D"]
 
 [node name="bodies" type="Node3D" parent="."]
 
-[node name="Star" parent="bodies" instance=ExtResource("1_3hnrb")]
-mass = 1.6e+11
-data = SubResource("Resource_oo4gj")
-
 [node name="body" parent="bodies" node_paths=PackedStringArray("influencing_body") instance=ExtResource("3_uicn7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.02106, 2.08165e-12, 2.08165e-12)
-linear_velocity = Vector3(2.08165e-12, 2.08165e-12, -1.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.15602, 0, -2.00666)
 influencing_body = NodePath("../Star")
-data = SubResource("Resource_8ghp4")
+data = SubResource("Resource_nelyn")
+
+[node name="body2" parent="bodies" node_paths=PackedStringArray("influencing_body") instance=ExtResource("3_uicn7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.18691, 0, -2.05608)
+influencing_body = NodePath("../Star")
+data = SubResource("Resource_w4d2i")
+
+[node name="Star" parent="bodies" instance=ExtResource("1_3hnrb")]
 
 [node name="UserInterface" parent="." node_paths=PackedStringArray("body") instance=ExtResource("3_edxjg")]
 body = NodePath("../Camera")
